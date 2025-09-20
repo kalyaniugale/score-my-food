@@ -25,8 +25,6 @@ SECRET_KEY = "django-insecure-qp7=kj#r4o)^%%m6aw+q-^n((&p42xajs9xeojnotlyb2z1l0g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -76,7 +74,7 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DEBUG = True
 
 # safest explicit list (recommended)
-ALLOWED_HOSTS = ["192.168.1.36", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["192.168.1.36", "localhost", "127.0.0.1","192.168.137.1"]
 
 # (Alternative for quick dev only)
 # ALLOWED_HOSTS = ["*"]   # <-- ok in local dev, NOT for production

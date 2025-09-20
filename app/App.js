@@ -816,9 +816,9 @@ function PantryScreen() {
         )}
 
         {!loading &&
-          basket.map((p) => (
+          basket.map((p, idx) => (
             <View
-              key={p.code}
+              key={p.code || `basket-${idx}`}   // ✅ unique key fix
               style={[
                 styles.card,
                 {
@@ -854,12 +854,20 @@ function PantryScreen() {
                   · {formatINR(p.price)}
                 </Text>
                 {Array.isArray(p.positives) && p.positives.length > 0 ? (
-                  <Text numberOfLines={1} style={{ color: "green" }}>
+                  <Text
+                    key={`pos-${p.code || idx}`}
+                    numberOfLines={1}
+                    style={{ color: "green" }}
+                  >
                     + {p.positives[0]}
                   </Text>
                 ) : null}
                 {Array.isArray(p.negatives) && p.negatives.length > 0 ? (
-                  <Text numberOfLines={1} style={{ color: "red" }}>
+                  <Text
+                    key={`neg-${p.code || idx}`}
+                    numberOfLines={1}
+                    style={{ color: "red" }}
+                  >
                     – {p.negatives[0]}
                   </Text>
                 ) : null}
@@ -884,6 +892,7 @@ function PantryScreen() {
     </ScrollView>
   );
 }
+
 function ProfileScreen() {
   const [profile, setProfile] = useState({
     displayName: "Demo User",
