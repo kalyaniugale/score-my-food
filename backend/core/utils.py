@@ -241,22 +241,38 @@ def _to_float(x: Any) -> Optional[float]:
 
 def coerce_nutrition(nutr: Dict[str, Any]) -> Dict[str, Optional[float]]:
     sodium_100g = nutr.get("sodium_100g")
-    sodium_mg = None
+    sodium_mg: Optional[float] = None
     if sodium_100g is not None:
         try:
             sodium_mg = float(sodium_100g) * 1000.0
         except Exception:
             sodium_mg = None
 
-    return {-
-        "energy_kj": _to_float(nutr.get("energy-kj_100g") or nutr.get("energy_100g")),
+    # OFF may provide both hyphenated and underscored keys; accept either.
+    energy_kj = (nutr.get("energy-kj_100g")
+                 or nutr.get("energy_kj_100g")
+                 or nutr.get("energy_100g"))  # energy_100g is kJ on OFF
+
+    sat_fat = nutr.get("saturated-fat_100g")
+    if sat_fat is None:
+        sat_fat = nutr.get("saturated_fat_100g")
+
+    trans_fat = nutr.get("trans-fat_100g")
+    if trans_fat is None:
+        trans_fat = nutr.get("trans_fat_100g")
+
+    return {
+        "energy_kj": _to_float(energy_kj),
         "sugar_g": _to_float(nutr.get("sugars_100g")),
         "sodium_mg": sodium_mg,
-        "sat_fat_g": _to_float(nutr.get("saturated_fat_100g")),
-        "trans_fat_g": _to_float(nutr.get("trans_fat_100g")),
+        "sat_fat_g": _to_float(sat_fat),
+        "trans_fat_g": _to_float(trans_fat),
         "fiber_g": _to_float(nutr.get("fiber_100g")),
         "protein_g": _to_float(nutr.get("proteins_100g")),
-        "fruit_pct": _to_float(nutr.get("fruits-vegetables-nuts-estimate-from-ingredients_100g") or nutr.get("fruits-vegetables-nuts_100g")),
+        "fruit_pct": _to_float(
+            nutr.get("fruits-vegetables-nuts-estimate-from-ingredients_100g")
+            or nutr.get("fruits-vegetables-nuts_100g")
+        ),
     }
 
 def is_beverage(p: Dict[str, Any]) -> bool:
