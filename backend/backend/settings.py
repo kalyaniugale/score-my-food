@@ -74,7 +74,7 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DEBUG = True
 
 # safest explicit list (recommended)
-ALLOWED_HOSTS = ["192.168.1.36", "localhost", "127.0.0.1","192.168.137.1","192.168.1.34"]
+ALLOWED_HOSTS = ["192.168.1.36", "localhost", "127.0.0.1","192.168.137.1","192.168.1.34","192.168.149.167"]
 
 # (Alternative for quick dev only)
 # ALLOWED_HOSTS = ["*"]   # <-- ok in local dev, NOT for production
